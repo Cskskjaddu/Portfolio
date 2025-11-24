@@ -1,0 +1,14 @@
+# Set the Content-Type for all files. This is often necessary for font files 
+# to ensure they are loaded correctly by all browsers.
+
+/fonts/*
+  Content-Type: font/woff2
+  Content-Type: font/woff
+  Access-Control-Allow-Origin: *
+
+# The following lines aren't necessary as Netlify handles them, 
+# but showing them for reference based on your original input:
+# /css/*
+#   Content-Type: text/css
+# /js/*
+#   Content-Type: application/javascript
