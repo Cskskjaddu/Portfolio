@@ -8,6 +8,15 @@
     --nothing-red: #D71921; /* The iconic Nothing red */
 }
 
+@font-face {
+    font-family: 'sis';
+    src: url('sis.woff2') format('woff2'),
+         url('sis.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 body {
     background-color: var(--nothing-black);
     color: var(--nothing-white);
