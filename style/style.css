@@ -9,7 +9,7 @@
 }
 
 @font-face {
-    font-family: 'sis';
+    font-family: 'Sis';
     src: url('Sis.woff2') format('woff2'),
          url('Sis.woff') format('woff');
     font-weight: normal;
@@ -25,7 +25,7 @@ body {
 
 /* Typography */
 h1, h2, h3, h4, h5, h6, .brand-font, .ndot-font {
-    font-family: 'sis', sans-serif; /* NDot style font */
+    font-family: 'Sis', sans-serif; /* NDot style font */
     letter-spacing: 0.05em;
 }
 
