@@ -10,8 +10,8 @@
 
 @font-face {
     font-family: 'sis';
-    src: url('sis.woff2') format('woff2'),
-         url('sis.woff') format('woff');
+    src: url('Sis.woff2') format('woff2'),
+         url('Sis.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
