@@ -8,14 +8,142 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- FontAwesome Icons (Standard CDN) -->
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@300;400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Google Fonts (Inter/Roboto) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="style/style.css">
+    <style>
+        /* Nothing OS Theme Customizations */
+        :root {
+            --nothing-black: #000000;
+            --nothing-dark: #121212;
+            --nothing-grey: #262626;
+            --nothing-light-grey: #8c8c8c;
+            --nothing-white: #ffffff;
+            --nothing-red: #D71921; /* The iconic Nothing red */
+        }
+
+        /* RESTORED: Local Sis Font Configuration */
+        @font-face {
+            font-family: 'Sis';
+            src: url('Sis.woff2') format('woff2'),
+                 url('Sis.woff') format('woff'),
+                 url('Sis.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        body {
+            background-color: var(--nothing-black);
+            color: var(--nothing-white);
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6, .brand-font, .ndot-font {
+            font-family: 'Sis', sans-serif; 
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .roboto-font {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Custom Selection Color */
+        ::selection {
+            background: var(--nothing-red);
+            color: var(--nothing-white);
+        }
+
+        /* Dot Pattern Background for Hero */
+        .bg-dots {
+            background-image: radial-gradient(var(--nothing-grey) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Glitch Effect for Name */
+        .glitch-text:hover {
+            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+            color: var(--nothing-red);
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0) }
+            20% { transform: translate(-2px, 2px) }
+            40% { transform: translate(-2px, -2px) }
+            60% { transform: translate(2px, 2px) }
+            80% { transform: translate(2px, -2px) }
+            100% { transform: translate(0) }
+        }
+
+        /* Skills Box Overlap Logic */
+        .skills-overlap {
+            margin-top: -4rem;
+            position: relative;
+            z-index: 10;
+        }
+        @media (min-width: 768px) {
+            .skills-overlap {
+                margin-top: -8rem;
+            }
+        }
+
+        /* Hover Effects */
+        .hover-card {
+            transition: all 0.3s ease;
+        }
+
+        .hover-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--nothing-white);
+            box-shadow: 0 10px 30px -10px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Avatar styling */
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+            transition: border-color 0.3s ease;
+        }
+
+        /* The offset border effect */
+        .avatar-container::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 100%;
+            height: 100%;
+            border: 1px solid var(--nothing-red);
+            z-index: -1;
+            transition: transform 0.3s ease;
+        }
+        
+        .avatar-container:hover::after {
+            transform: translate(5px, 5px);
+        }
+
+        /* Utility for aspect ratios */
+        .aspect-video {
+            aspect-ratio: 16 / 9;
+        }
+
+        /* SCROLL TRANSITION EFFECTS */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body class="antialiased">
 
@@ -24,13 +152,13 @@
         <div class="text-2xl font-bold brand-font text-white">
             SIVA KUMAR<span class="text-red-600">.</span>R
         </div>
-        <a href="mailto:sirsivakumar@outlook.com" class="border border-neutral-600 px-4 py-2 rounded-full text-sm hover:bg-white hover:text-black transition-colors">
+        <a href="mailto:sirsivakumar@outlook.com" class="border border-neutral-600 px-4 py-2 rounded-full text-sm hover:bg-white hover:text-black transition-colors roboto-font">
             Say Hello
         </a>
     </nav>
 
     <!-- Hero -->
-    <section class="relative pt-20 pb-48 md:pt-32 md:pb-64 bg-dots overflow-hidden text-center">
+    <section class="relative pt-20 pb-48 md:pt-32 md:pb-64 bg-dots overflow-hidden text-center reveal">
         <div class="container mx-auto px-4">
             <h2 class="text-xl md:text-2xl text-neutral-400 mb-4 font-bold brand-font">Student at Panimalar Engineering College</h2>
             
@@ -42,39 +170,94 @@
                 I design and code beautifully simple things, love developing GUI based applications and I code what I love.
             </p>
 
-            <div class="avatar-container mb-10">
-                <div class="w-64 h-96 md:w-80 md:h-[500px] bg-neutral-900/50 border border-white flex items-center justify-center overflow-hidden">
-                    <img src="images/avatar.png" alt="3D Avatar" class="w-full h-full object-contain">
+            <div id="model-3d-viewer" class="avatar-container mb-10">
+                <div class="w-64 h-80 md:w-80 md:h-96 bg-neutral-900/80 border border-white flex items-center justify-center overflow-hidden relative">
+                    <!-- Original Avatar Image Logic -->
+                    <img src="images/avatar.png" onerror="this.src='https://placehold.co/400x500/121212/D71921?text=Avatar+Missing'" alt="Avatar" class="w-full h-full object-contain relative z-10">
                 </div>
             </div>
 
-            <div class="mt-8 opacity-20 text-neutral-800 text-9xl">
+            <div class="mt-8 opacity-20 text-neutral-800 text-6xl md:text-9xl animate-pulse">
                 <i class="fa-solid fa-computer"></i>
             </div>
         </div>
     </section>
 
     <!-- Bio -->
-    <section class="bg-neutral-900 pt-16 pb-48 text-center border-t border-neutral-800">
+    <section class="bg-neutral-900 pt-16 pb-32 text-center border-t border-neutral-800 reveal">
         <div class="container mx-auto px-4 max-w-3xl">
             <h3 class="text-2xl md:text-3xl font-bold mb-6 brand-font">Hi, I’m Siva. Nice to meet you.</h3>
             <p class="text-neutral-300 leading-relaxed text-lg roboto-font">
-                I am a passionate student and developer. I had developed a couple of simple logic applications. I love porting my applications throughout everything and bringing ideas to life on the screen. I am quietly confident, naturally curious, and perpetually working on improving my chops.
+                I am a passionate student and developer. I have developed a couple of simple logic applications. I love porting my applications across platforms and bringing ideas to life on the screen. I am quietly confident, naturally curious, and perpetually working on improving my chops.
             </p>
         </div>
     </section>
 
+    <!-- NEW SECTION: Founder Block (Sparklance Solutions) -->
+    <section class="bg-black py-20 border-y border-neutral-800 relative overflow-hidden reveal">
+        <!-- Decorative background element -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-red-900/10 blur-3xl rounded-full pointer-events-none"></div>
+        
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-12 max-w-5xl mx-auto">
+                
+                <div class="text-center md:text-left">
+                    <div class="flex items-center justify-center md:justify-start gap-3 mb-4">
+                        <span class="w-2 h-2 bg-red-600 rounded-full animate-pulse"></span>
+                        <p class="text-red-600 font-bold tracking-widest text-sm brand-font">CURRENT VENTURE</p>
+                    </div>
+                    
+                    <h2 class="text-4xl md:text-6xl font-bold mb-4 brand-font text-white">
+                        FOUNDER OF<br>
+                        <span class="text-neutral-500 group-hover:text-white transition-colors">SPARKLANCE</span>
+                    </h2>
+                    
+                    <p class="text-neutral-400 text-lg mb-8 max-w-md roboto-font">
+                        Leading the way in innovative digital solutions. Building the future, one pixel at a time.
+                    </p>
+
+                    <!-- ADDED LINK HERE -->
+                    <a href="https://sparklance-solutions.netlify.app/" target="_blank" class="inline-flex items-center gap-3 bg-white text-black px-8 py-3 rounded-full font-bold hover:bg-neutral-200 transition-all brand-font group">
+                        VISIT WEBSITE 
+                        <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
+                    </a>
+                </div>
+
+                <!-- Visual Element for Sparklance -->
+                <div class="relative w-full md:w-1/2 max-w-md">
+                    <div class="aspect-video bg-neutral-900 border border-neutral-800 rounded-lg p-1 flex items-center justify-center relative overflow-hidden group hover:border-red-600 transition-colors duration-500">
+                        <!-- Abstract UI representation -->
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-neutral-800/50 to-transparent opacity-50"></div>
+                        <div class="text-center z-10">
+                            <i class="fa-solid fa-bolt text-5xl text-neutral-700 group-hover:text-red-600 transition-colors duration-300 mb-2"></i>
+                            <div class="brand-font text-xl text-neutral-500">SPARKLANCE</div>
+                            <div class="text-xs text-neutral-600 brand-font">SOLUTIONS</div>
+                        </div>
+                        
+                        <!-- Corner accents -->
+                        <div class="absolute top-2 left-2 w-2 h-2 border-t border-l border-neutral-600"></div>
+                        <div class="absolute top-2 right-2 w-2 h-2 border-t border-r border-neutral-600"></div>
+                        <div class="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-neutral-600"></div>
+                        <div class="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-neutral-600"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
     <!-- Skills -->
-    <section class="container mx-auto px-4 skills-overlap">
+    <section class="container mx-auto px-4 skills-overlap pb-20 reveal">
         <div class="bg-black border border-neutral-700 rounded-xl shadow-2xl overflow-hidden">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-neutral-700">
                 
                 <!-- Skill Column 1 -->
-                <div class="p-8 text-center hover:bg-neutral-900 transition-colors">
+                <div class="p-8 text-center hover:bg-neutral-900 transition-colors group">
                     <div class="w-16 h-16 mx-auto bg-neutral-800 rounded-full flex items-center justify-center mb-6 overflow-hidden p-3">
-                        <img src="images/skill-python.png" alt="Python" class="w-full h-full object-contain">
+                        <!-- RESTORED: Original Image Path -->
+                        <img src="images/skill-python.png" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-brands fa-python text-3xl text-neutral-300\'></i>'" alt="Python" class="w-full h-full object-contain">
                     </div>
-                    <h3 class="text-xl font-bold mb-4 brand-font">Python Developer</h3>
+                    <h3 class="text-xl font-bold mb-4 brand-font">Python Dev</h3>
                     <p class="text-sm text-neutral-400 mb-6 roboto-font">Simple logic apps & automation.</p>
                     <p class="text-red-600 text-sm font-bold mb-2 brand-font">TOOLS:</p>
                     <ul class="text-sm text-neutral-300 space-y-1 roboto-font">
@@ -83,11 +266,12 @@
                 </div>
 
                 <!-- Skill Column 2 -->
-                <div class="p-8 text-center hover:bg-neutral-900 transition-colors">
+                <div class="p-8 text-center hover:bg-neutral-900 transition-colors group">
                     <div class="w-16 h-16 mx-auto bg-neutral-800 rounded-full flex items-center justify-center mb-6 overflow-hidden p-3">
-                        <img src="images/skill-web.png" alt="Web" class="w-full h-full object-contain">
+                        <!-- RESTORED: Original Image Path -->
+                        <img src="images/skill-web.png" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-solid fa-code text-3xl text-neutral-300\'></i>'" alt="Web" class="w-full h-full object-contain">
                     </div>
-                    <h3 class="text-xl font-bold mb-4 brand-font">Web Developer</h3>
+                    <h3 class="text-xl font-bold mb-4 brand-font">Web Dev</h3>
                     <p class="text-sm text-neutral-400 mb-6 roboto-font">Vibe coding sleek sites.</p>
                     <p class="text-red-600 text-sm font-bold mb-2 brand-font">TOOLS:</p>
                     <ul class="text-sm text-neutral-300 space-y-1 roboto-font">
@@ -96,11 +280,12 @@
                 </div>
 
                 <!-- Skill Column 3 -->
-                <div class="p-8 text-center hover:bg-neutral-900 transition-colors">
+                <div class="p-8 text-center hover:bg-neutral-900 transition-colors group">
                     <div class="w-16 h-16 mx-auto bg-neutral-800 rounded-full flex items-center justify-center mb-6 overflow-hidden p-3">
-                        <img src="images/skill-app.png" alt="App" class="w-full h-full object-contain">
+                        <!-- RESTORED: Original Image Path -->
+                        <img src="images/skill-app.png" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-brands fa-android text-3xl text-neutral-300\'></i>'" alt="App" class="w-full h-full object-contain">
                     </div>
-                    <h3 class="text-xl font-bold mb-4 brand-font">App Developer</h3>
+                    <h3 class="text-xl font-bold mb-4 brand-font">App Dev</h3>
                     <p class="text-sm text-neutral-400 mb-6 roboto-font">Cross-platform porting.</p>
                     <p class="text-red-600 text-sm font-bold mb-2 brand-font">TOOLS:</p>
                     <ul class="text-sm text-neutral-300 space-y-1 roboto-font">
@@ -109,11 +294,12 @@
                 </div>
 
                 <!-- Skill Column 4 -->
-                <div class="p-8 text-center hover:bg-neutral-900 transition-colors">
+                <div class="p-8 text-center hover:bg-neutral-900 transition-colors group">
                     <div class="w-16 h-16 mx-auto bg-neutral-800 rounded-full flex items-center justify-center mb-6 overflow-hidden p-3">
-                        <img src="images/skill-java.png" alt="Java" class="w-full h-full object-contain">
+                        <!-- RESTORED: Original Image Path -->
+                        <img src="images/skill-java.png" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-brands fa-java text-3xl text-neutral-300\'></i>'" alt="Java" class="w-full h-full object-contain">
                     </div>
-                    <h3 class="text-xl font-bold mb-4 brand-font">Java Developer</h3>
+                    <h3 class="text-xl font-bold mb-4 brand-font">Java Dev</h3>
                     <p class="text-sm text-neutral-400 mb-6 roboto-font">GUI & OODP enthusiast.</p>
                     <p class="text-red-600 text-sm font-bold mb-2 brand-font">TOOLS:</p>
                     <ul class="text-sm text-neutral-300 space-y-1 roboto-font">
@@ -126,7 +312,7 @@
     </section>
 
     <!-- Projects -->
-    <section class="py-20 md:py-32">
+    <section class="py-20 md:py-32 reveal">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-3xl md:text-4xl font-bold mb-4 brand-font">My Recent Work</h2>
             <p class="text-neutral-400 text-lg mb-16 roboto-font">Here are a few projects I've worked on recently.</p>
@@ -135,8 +321,12 @@
                 
                 <!-- Project Card 1 -->
                 <div class="border border-neutral-800 bg-neutral-900/50 rounded-lg p-6 hover-card group">
-                    <div class="h-48 bg-neutral-800 rounded border border-dotted border-neutral-600 overflow-hidden mb-6 group-hover:border-red-600 transition-colors">
-                        <img src="images/project-word-game.png" alt="Word Game" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                    <div class="h-48 bg-neutral-800 rounded border border-dotted border-neutral-600 overflow-hidden mb-6 group-hover:border-red-600 transition-colors relative">
+                        <!-- Fallback icon in background in case image fails -->
+                        <div class="absolute inset-0 flex items-center justify-center text-neutral-700">
+                             <i class="fa-solid fa-gamepad text-4xl"></i>
+                        </div>
+                        <img src="images/project-word-game.png" onerror="this.style.opacity='0'" alt="Word Game" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity relative z-10">
                     </div>
                     <h3 class="text-xl font-bold mb-2 brand-font">Word Building Game</h3>
                     <p class="text-neutral-400 text-sm mb-4 roboto-font">Available as PC game, mobile app, and website.</p>
@@ -144,15 +334,18 @@
                         <span class="text-xs border border-neutral-600 px-2 py-1 rounded text-neutral-300">Python</span>
                         <span class="text-xs border border-neutral-600 px-2 py-1 rounded text-neutral-300">Android</span>
                     </div>
-                    <a href="https://word-building.netlify.app/" class="inline-flex items-center text-red-500 hover:text-white font-bold text-sm transition-colors brand-font">
+                    <a href="https://word-building.netlify.app/" target="_blank" class="inline-flex items-center text-red-500 hover:text-white font-bold text-sm transition-colors brand-font">
                         VIEW PROJECT <i class="fa-solid fa-arrow-right ml-2"></i>
                     </a>
                 </div>
 
                 <!-- Project Card 2 -->
                 <div class="border border-neutral-800 bg-neutral-900/50 rounded-lg p-6 hover-card group">
-                    <div class="h-48 bg-neutral-800 rounded border border-dotted border-neutral-600 overflow-hidden mb-6 group-hover:border-red-600 transition-colors">
-                        <img src="images/project-restaurant.jpg" alt="Restaurant System" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                    <div class="h-48 bg-neutral-800 rounded border border-dotted border-neutral-600 overflow-hidden mb-6 group-hover:border-red-600 transition-colors relative">
+                        <div class="absolute inset-0 flex items-center justify-center text-neutral-700">
+                             <i class="fa-solid fa-utensils text-4xl"></i>
+                        </div>
+                        <img src="images/project-restaurant.jpg" onerror="this.style.opacity='0'" alt="Restaurant System" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity relative z-10">
                     </div>
                     <h3 class="text-xl font-bold mb-2 brand-font">Restaurant System</h3>
                     <p class="text-neutral-400 text-sm mb-4 roboto-font">Management system with Java JFrame & SQL.</p>
@@ -160,15 +353,18 @@
                         <span class="text-xs border border-neutral-600 px-2 py-1 rounded text-neutral-300">Java</span>
                         <span class="text-xs border border-neutral-600 px-2 py-1 rounded text-neutral-300">SQL</span>
                     </div>
-                    <a href="https://www.linkedin.com/posts/siva-kumar-r-a90a482b1_problemsolving-javadeveloper-softwareengineer-activity-7383065631878934528-fHjO?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEsVSAwB2qsqTr3xbs_xRdU8EnK4MDlmGao" class="inline-flex items-center text-red-500 hover:text-white font-bold text-sm transition-colors brand-font">
+                    <a href="https://www.linkedin.com/posts/siva-kumar-r-a90a482b1_problemsolving-javadeveloper-softwareengineer-activity-7383065631878934528-fHjO" target="_blank" class="inline-flex items-center text-red-500 hover:text-white font-bold text-sm transition-colors brand-font">
                         VIEW PROJECT <i class="fa-solid fa-arrow-right ml-2"></i>
                     </a>
                 </div>
 
                 <!-- Project Card 3 -->
                 <div class="border border-neutral-800 bg-neutral-900/50 rounded-lg p-6 hover-card group">
-                    <div class="h-48 bg-neutral-800 rounded border border-dotted border-neutral-600 overflow-hidden mb-6 group-hover:border-red-600 transition-colors">
-                        <img src="images/project-netflix.jpg" alt="Netflix Clone" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                    <div class="h-48 bg-neutral-800 rounded border border-dotted border-neutral-600 overflow-hidden mb-6 group-hover:border-red-600 transition-colors relative">
+                        <div class="absolute inset-0 flex items-center justify-center text-neutral-700">
+                             <i class="fa-solid fa-tv text-4xl"></i>
+                        </div>
+                        <img src="images/project-netflix.jpg" onerror="this.style.opacity='0'" alt="Netflix Clone" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity relative z-10">
                     </div>
                     <h3 class="text-xl font-bold mb-2 brand-font">Netflix Clone</h3>
                     <p class="text-neutral-400 text-sm mb-4 roboto-font">Visual clone using pure HTML & CSS.</p>
@@ -176,7 +372,7 @@
                         <span class="text-xs border border-neutral-600 px-2 py-1 rounded text-neutral-300">HTML5</span>
                         <span class="text-xs border border-neutral-600 px-2 py-1 rounded text-neutral-300">CSS3</span>
                     </div>
-                    <a href="https://github.com/Cskskjaddu/netflix-clone" class="inline-flex items-center text-red-500 hover:text-white font-bold text-sm transition-colors brand-font">
+                    <a href="https://github.com/Cskskjaddu/netflix-clone" target="_blank" class="inline-flex items-center text-red-500 hover:text-white font-bold text-sm transition-colors brand-font">
                         VIEW PROJECT <i class="fa-solid fa-arrow-right ml-2"></i>
                     </a>
                 </div>
@@ -192,12 +388,12 @@
     </section>
 
     <!-- Contact -->
-    <section class="py-20 bg-neutral-900 border-y border-neutral-800 text-center">
+    <section class="py-20 bg-neutral-900 border-y border-neutral-800 text-center reveal">
         <div class="container mx-auto px-4">
             <div class="bg-black border border-neutral-700 rounded-xl p-12">
                 <h2 class="text-3xl font-bold mb-6 brand-font">Get in Touch</h2>
                 <div class="inline-block border-2 border-dotted border-neutral-600 p-2 rounded-lg">
-                    <a href="mailto:sirsivakumar@outlook.com" class="block bg-neutral-900 border border-neutral-700 text-neutral-300 hover:text-red-600 hover:border-red-600 font-bold text-xl md:text-3xl py-6 px-10 rounded transition-all roboto-font">
+                    <a href="mailto:sirsivakumar@outlook.com" class="block bg-neutral-900 border border-neutral-700 text-neutral-300 hover:text-red-600 hover:border-red-600 font-bold text-lg md:text-3xl py-6 px-4 md:px-10 rounded transition-all roboto-font break-all">
                         sirsivakumar@outlook.com
                     </a>
                 </div>
@@ -207,7 +403,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-black pt-16 pb-8 text-center">
+    <footer class="bg-black pt-16 pb-8 text-center reveal">
         <div class="container mx-auto px-4">
             <div class="mb-8 text-4xl font-bold brand-font text-neutral-500 hover:text-white transition-colors cursor-default">
                 S<span class="text-red-600">.</span>K
@@ -239,5 +435,41 @@
         </div>
     </footer>
 
+    <script>
+        console.log("Nothing OS Portfolio Loaded");
+
+        // Avatar Border Effect
+        const modelContainer = document.getElementById('model-3d-viewer');
+        if (modelContainer) {
+            modelContainer.addEventListener('mouseenter', () => {
+                modelContainer.style.borderColor = '#D71921'; 
+            });
+            modelContainer.addEventListener('mouseleave', () => {
+                modelContainer.style.borderColor = '#ffffff'; 
+            });
+        }
+
+        // Scroll Transition Effect (Intersection Observer)
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+
+            const revealOnScroll = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        // Optional: Stop observing once revealed
+                        // observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1, // Trigger when 10% of the element is visible
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            reveals.forEach(reveal => {
+                revealOnScroll.observe(reveal);
+            });
+        });
+    </script>
 </body>
 </html>
