@@ -11,8 +11,8 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Google Fonts (Inter/Roboto) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Added DotGothic16 as a fallback to ensure the look works if local files fail -->
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@300;400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
         /* Nothing OS Theme Customizations */
@@ -42,9 +42,10 @@
             font-family: 'Inter', sans-serif;
         }
 
-        /* Typography */
+        /* Typography - FORCE SIS with Fallback */
         h1, h2, h3, h4, h5, h6, .brand-font, .ndot-font {
-            font-family: 'Sis', sans-serif; 
+            /* Priority: Local Sis -> Google DotGothic16 -> System Sans */
+            font-family: 'Sis', 'DotGothic16', sans-serif !important; 
             letter-spacing: 0.05em;
             text-transform: uppercase;
         }
@@ -194,14 +195,15 @@
     </section>
 
     <!-- NEW SECTION: Founder Block (Sparklance Solutions) -->
-    <section class="bg-black py-20 border-y border-neutral-800 relative overflow-hidden reveal">
+    <!-- FIX: Increased padding bottom (pb-48 md:pb-64) to accommodate the negative margin of the next section -->
+    <section class="bg-black pt-20 pb-48 md:pb-64 border-y border-neutral-800 relative overflow-hidden reveal">
         <!-- Decorative background element -->
         <div class="absolute top-0 right-0 w-64 h-64 bg-red-900/10 blur-3xl rounded-full pointer-events-none"></div>
         
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row items-center justify-between gap-12 max-w-5xl mx-auto">
                 
-                <div class="text-center md:text-left">
+                <div class="text-center md:text-left relative z-10">
                     <div class="flex items-center justify-center md:justify-start gap-3 mb-4">
                         <span class="w-2 h-2 bg-red-600 rounded-full animate-pulse"></span>
                         <p class="text-red-600 font-bold tracking-widest text-sm brand-font">CURRENT VENTURE</p>
@@ -216,7 +218,6 @@
                         Leading the way in innovative digital solutions. Building the future, one pixel at a time.
                     </p>
 
-                    <!-- ADDED LINK HERE -->
                     <a href="https://sparklance-solutions.netlify.app/" target="_blank" class="inline-flex items-center gap-3 bg-white text-black px-8 py-3 rounded-full font-bold hover:bg-neutral-200 transition-all brand-font group">
                         VISIT WEBSITE 
                         <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
