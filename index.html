@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siva Kumar R | Portfolio | Nothing OS</title>
+    <title>Siva Kumar R | Portfolio </title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -610,8 +610,14 @@
         const toggleSwitch = document.getElementById('theme-toggle');
         const htmlElement = document.documentElement;
 
+        // Default: Dark Mode (No class added)
+        // Only add 'light-mode' if explicitly stored as 'light'
         if (localStorage.getItem('theme') === 'light') {
             htmlElement.classList.add('light-mode');
+        } else {
+            // Ensure we start with dark if generic or undefined
+            localStorage.setItem('theme', 'dark');
+            htmlElement.classList.remove('light-mode');
         }
 
         toggleSwitch.addEventListener('click', () => {
