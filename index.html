@@ -302,7 +302,8 @@
                     <!-- Scanline effect -->
                     <div class="absolute inset-0 bg-gradient-to-b from-transparent via-red-500/10 to-transparent h-2 w-full animate-[scan_3s_linear_infinite] pointer-events-none z-20"></div>
                     
-                    <img src="images/avatar.png" onerror="this.src='https://placehold.co/400x500/121212/D71921?text=SK'" alt="Avatar" class="w-full h-full object-contain relative z-10 grayscale group-hover:grayscale-0 transition-all duration-500">
+                    <!-- UPDATED: Removed grayscale classes so avatar is color by default -->
+                    <img src="images/avatar.png" onerror="this.src='https://placehold.co/400x500/121212/D71921?text=SK'" alt="Avatar" class="w-full h-full object-contain relative z-10 transition-all duration-500">
                 </div>
                 <!-- Decorative elements behind -->
                 <div class="absolute -top-4 -right-4 w-8 h-8 border-t-2 border-r-2 border-red-600"></div>
@@ -435,8 +436,9 @@
     <section class="py-12 border-y border-theme bg-theme-secondary overflow-hidden" style="background-color: var(--bg-secondary);">
         <div class="tech-marquee">
             <div class="tech-track brand-font">
-                <!-- Doubled items for seamless loop -->
+                <!-- UPDATED: Reordered to React Native -> Java ... and looped seamlessly -->
                 <div class="flex items-center">
+                    <i class="fa-brands fa-react tech-item" title="React Native"></i>
                     <i class="fa-brands fa-java tech-item" title="Java"></i>
                     <i class="fa-brands fa-python tech-item" title="Python"></i>
                     <i class="fa-brands fa-js tech-item" title="JavaScript"></i>
@@ -446,8 +448,9 @@
                     <i class="fa-brands fa-git-alt tech-item" title="Git"></i>
                     <i class="fa-solid fa-database tech-item" title="SQL"></i>
                     <i class="fa-brands fa-linux tech-item" title="Linux"></i>
-                    <i class="fa-brands fa-react tech-item" title="React"></i>
-                    <!-- Repeat for loop -->
+                    
+                    <!-- Repeat for seamless loop -->
+                    <i class="fa-brands fa-react tech-item" title="React Native"></i>
                     <i class="fa-brands fa-java tech-item" title="Java"></i>
                     <i class="fa-brands fa-python tech-item" title="Python"></i>
                     <i class="fa-brands fa-js tech-item" title="JavaScript"></i>
@@ -457,7 +460,6 @@
                     <i class="fa-brands fa-git-alt tech-item" title="Git"></i>
                     <i class="fa-solid fa-database tech-item" title="SQL"></i>
                     <i class="fa-brands fa-linux tech-item" title="Linux"></i>
-                    <i class="fa-brands fa-react tech-item" title="React"></i>
                 </div>
             </div>
         </div>
