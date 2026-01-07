@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siva Kumar R | Portfolio </title>
     
-    <!-- Tailwind CSS -->
+    <!-- PHASE 3: SEO & SOCIAL META TAGS -->
+    <title>Siva Kumar R | Frontend Engineer & App Developer</title>
+    <meta name="description" content="Portfolio of Siva Kumar R, a frontend engineer specializing in scalable web applications, Android development, and interactive UI design.">
+    <meta property="og:title" content="Siva Kumar R | Software Engineer Portfolio">
+    <meta property="og:description" content="View selected works in Web Development, Python, and Java applications.">
+    <meta property="og:image" content="images/avatar.png">
+    <meta property="og:type" content="website">
+
+    <!-- PHASE 1: TAILWIND (Note: For production, replace this script with: <link href="output.css" rel="stylesheet">) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- FontAwesome Icons -->
@@ -15,13 +22,14 @@
     <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@300;400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
-        /* --- CORE THEME VARIABLES (Dark Mode Default) --- */
+        /* --- CORE THEME VARIABLES --- */
         :root {
             --bg-primary: #000000;
             --bg-secondary: #121212;
             --bg-tertiary: #1a1a1a;
             --text-main: #ffffff;
-            --text-muted: #a3a3a3;
+            /* PHASE 2: IMPROVED READABILITY */
+            --text-muted: #b3b3b3; 
             --border-color: #333333;
             --accent-red: #D71921;
             --dot-color: #262626;
@@ -29,21 +37,19 @@
             --glitch-shadow: cyan;
         }
 
-        /* --- LIGHT MODE VARIABLES --- */
         html.light-mode {
-            --bg-primary: #e5e5e5; /* Nothing Ear (stick) case vibe */
+            --bg-primary: #e5e5e5;
             --bg-secondary: #ffffff;
             --bg-tertiary: #d4d4d4;
             --text-main: #000000;
             --text-muted: #525252;
             --border-color: #d1d1d1;
-            --accent-red: #D71921; /* Red stays Red */
+            --accent-red: #D71921;
             --dot-color: #bfbfbf;
             --card-hover: rgba(0, 0, 0, 0.05);
             --glitch-shadow: #ff00ff;
         }
 
-        /* --- STRICT FONT PRESERVATION --- */
         @font-face {
             font-family: 'Sis';
             src: url('style/Sis.woff2') format('woff2'),
@@ -59,14 +65,19 @@
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
             transition: background-color 0.3s ease, color 0.3s ease;
-            cursor: none; /* Custom cursor implementation */
+            /* PHASE 1: CURSOR FIX - Default is auto, hidden only via class */
+            cursor: auto; 
             overflow-x: hidden;
         }
 
-        /* FORCE SIS with Fallback */
+        /* Active class for custom cursor logic */
+        body.mouse-active {
+            cursor: none;
+        }
+
         h1, h2, h3, h4, h5, h6, .brand-font, .ndot-font {
             font-family: 'Sis', 'DotGothic16', sans-serif !important;
-             letter-spacing: 0.05em;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
         }
 
@@ -83,7 +94,16 @@
             border-radius: 50%;
             z-index: 9999;
             pointer-events: none;
+            /* PHASE 1: Hidden by default to prevent ghost cursor on load/touch */
+            display: none;
         }
+
+        /* Only show when mouse logic is active */
+        body.mouse-active #cursor-dot,
+        body.mouse-active #cursor-outline {
+            display: block;
+        }
+
         #cursor-dot {
             width: 8px;
             height: 8px;
@@ -106,7 +126,6 @@
         .bg-theme-secondary { background-color: var(--bg-secondary); }
         .text-theme-muted { color: var(--text-muted); }
 
-        /* Dynamic Background Canvas */
         #glyph-canvas {
             position: fixed;
             top: 0;
@@ -118,7 +137,6 @@
             pointer-events: none;
         }
 
-        /* Toggle Switch */
         .toggle-switch {
             width: 50px;
             height: 26px;
@@ -145,7 +163,6 @@
             background-color: var(--accent-red);
         }
 
-        /* Glitch Effect */
         .glitch-text:hover {
             animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
             color: var(--accent-red);
@@ -160,7 +177,6 @@
             100% { transform: translate(0) }
         }
 
-        /* Floating Animation */
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
@@ -169,7 +185,6 @@
         .float-anim {
             animation: float 6s ease-in-out infinite;
         }
-        /* Stagger animations so they don't all move in sync */
         .float-anim:nth-child(even) {
             animation-delay: 1s;
         }
@@ -177,9 +192,9 @@
             animation-delay: 2s;
         }
 
-        /* Card Hover */
+        /* PHASE 4: CARD INTERACTIVITY TRANSITION */
         .hover-card {
-            transition: all 0.3s ease;
+            transition: all 0.3s ease, opacity 0.3s ease; /* Added opacity transition */
             border: 1px solid var(--border-color);
         }
         .hover-card:hover {
@@ -188,7 +203,12 @@
             background-color: var(--card-hover);
         }
 
-        /* Avatar Container */
+        /* PHASE 4: DIMMING EFFECT CLASS */
+        .card-dimmed {
+            opacity: 0.2;
+            filter: grayscale(100%);
+        }
+
         .avatar-container {
             position: relative;
             display: inline-block;
@@ -202,7 +222,6 @@
             border-style: solid;
         }
 
-        /* Reveal Animation */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -213,7 +232,6 @@
             transform: translateY(0);
         }
 
-        /* Tech Stack Marquee (Infinite Scroll) */
         .tech-marquee {
             overflow: hidden;
             position: relative;
@@ -266,13 +284,13 @@
             </div>
         </div>
 
-        <!-- NEW LINKS: Similar to Sharan.dev -->
         <div class="flex items-center gap-6 md:gap-8">
+            <!-- PHASE 3: Nav Feedback - IDs added to LIs via JS or directly here for better targeting -->
             <ul class="flex items-center gap-6 text-sm brand-font" style="color: var(--text-main);">
-                <li><a href="#about" class="hover:text-red-600 transition-colors">ABOUT</a></li>
-                <li><a href="#skills" class="hover:text-red-600 transition-colors">SKILLS</a></li>
-                <li><a href="#projects" class="hover:text-red-600 transition-colors">PROJECTS</a></li>
-                <li><a href="#contact" class="hover:text-red-600 transition-colors">CONTACT ME</a></li>
+                <li><a href="#about" class="nav-link hover:text-red-600 transition-colors" data-target="about">ABOUT</a></li>
+                <li><a href="#skills" class="nav-link hover:text-red-600 transition-colors" data-target="skills">SKILLS</a></li>
+                <li><a href="#projects" class="nav-link hover:text-red-600 transition-colors" data-target="projects">PROJECTS</a></li>
+                <li><a href="#contact" class="nav-link hover:text-red-600 transition-colors" data-target="contact">CONTACT ME</a></li>
             </ul>
 
             <!-- Theme Toggle -->
@@ -288,19 +306,21 @@
     <section class="relative pt-20 pb-40 md:pt-32 md:pb-52 overflow-hidden text-center reveal">
         <div class="container mx-auto px-4 z-10 relative">
             <h2 class="text-xl md:text-2xl text-theme-muted mb-4 font-bold brand-font">Student at Panimalar Engineering College</h2>
-                        <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight" style="color: var(--text-main);">
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight" style="color: var(--text-main);">
                 STUDENT AND <br> <span class="glitch-text cursor-default">CODING ENTHUSIAST</span>
             </h1>
-                        <p class="text-lg md:text-xl text-theme-muted max-w-2xl mx-auto mb-12 roboto-font">
-                I design and code beautifully simple things. I love developing GUI based applications and I code what I love.
+            
+            <!-- PHASE 3: RECRUITER POLISH - BIO REWRITE -->
+            <p class="text-lg md:text-xl text-theme-muted max-w-2xl mx-auto mb-12 roboto-font">
+                A detail-oriented developer bridging the gap between functional logic and engaging design. I build scalable applications with a focus on seamless user experiences and clean architecture.
             </p>
 
             <div id="model-3d-viewer" class="avatar-container mb-10 group">
+                <!-- PHASE 1: LAYOUT SHIFT FIX - Explicit Width/Height -->
                 <div class="w-64 h-80 md:w-80 md:h-96 bg-theme-secondary avatar-frame flex items-center justify-center overflow-hidden relative">
                     <!-- Scanline effect -->
                     <div class="absolute inset-0 bg-gradient-to-b from-transparent via-red-500/10 to-transparent h-2 w-full animate-[scan_3s_linear_infinite] pointer-events-none z-20"></div>
-                                        <!-- UPDATED: Removed grayscale classes so avatar is color by default -->
-                    <img src="images/avatar.png" onerror="this.src='https://placehold.co/400x500/121212/D71921?text=SK'" alt="Avatar" class="w-full h-full object-contain relative z-10 transition-all duration-500">
+                    <img src="images/avatar.png" width="320" height="384" onerror="this.src='https://placehold.co/400x500/121212/D71921?text=SK'" alt="Avatar" class="w-full h-full object-contain relative z-10 transition-all duration-500">
                 </div>
                 <!-- Decorative elements behind -->
                 <div class="absolute -top-4 -right-4 w-8 h-8 border-t-2 border-r-2 border-red-600"></div>
@@ -325,55 +345,54 @@
 
     <!-- SPARKLANCE SOLUTIONS (Featured) -->
     <section class="pt-20 pb-48 md:pb-64 border-b border-theme relative overflow-hidden reveal" style="background-color: var(--bg-primary);">
-        <!-- Background decorative text -->
         <div class="absolute top-10 right-0 text-9xl font-bold opacity-5 brand-font select-none pointer-events-none" style="color: var(--text-muted);">
             SPARK
         </div>
 
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row items-center justify-between gap-12 max-w-6xl mx-auto">
-                                <div class="text-center md:text-left relative z-10 md:w-1/2">
+                <div class="text-center md:text-left relative z-10 md:w-1/2">
                     <div class="flex items-center justify-center md:justify-start gap-3 mb-4">
                         <span class="w-2 h-2 bg-red-600 rounded-full animate-ping"></span>
                         <p class="text-red-600 font-bold tracking-widest text-sm brand-font">CURRENT VENTURE</p>
                     </div>
-                                        <h2 class="text-4xl md:text-5xl font-bold mb-4 brand-font" style="color: var(--text-main);">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 brand-font" style="color: var(--text-main);">
                         FOUNDER OF<br>
                         <span class="text-theme-muted hover:text-red-600 transition-colors duration-300">SPARKLANCE SOLUTIONS</span>
                     </h2>
-                                        <p class="text-theme-muted text-lg mb-8 roboto-font">
+                    <p class="text-theme-muted text-lg mb-8 roboto-font">
                         Leading the way in innovative digital solutions. Building the future, one pixel at a time.
                     </p>
-
-                    <a href="https://sparklance-solutions.netlify.app/" target="_blank" class="inline-flex items-center gap-3 bg-red-600 text-white px-8 py-3 rounded-none hover:bg-white hover:text-black transition-all brand-font group shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none">
+                    <!-- PHASE 2: STANDARDIZE BORDER RADIUS -->
+                    <a href="https://sparklance-solutions.netlify.app/" target="_blank" class="inline-flex items-center gap-3 bg-red-600 text-white px-8 py-3 rounded-full hover:bg-white hover:text-black transition-all brand-font group shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none">
                         VISIT WEBSITE
                          <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
                     </a>
                 </div>
 
-                <!-- Sparklance Visual - Removed Red Glow, kept float animation -->
                 <div class="relative w-full md:w-1/2 flex justify-center">
                     <div class="relative group cursor-pointer float-anim">
-                        <!-- REMOVED RED GLOW DIV -->
-                                                                <!-- Container -->
                         <div class="w-64 h-64 md:w-80 md:h-80 border-2 border-dashed border-theme rounded-full flex items-center justify-center relative z-10 hover:border-red-600 transition-colors duration-500">
-                                                        <!-- Animated Pattern Background -->
                             <div class="absolute inset-0 opacity-10 rounded-full overflow-hidden" style="background-image: radial-gradient(var(--text-muted) 1px, transparent 1px); background-size: 10px 10px;"></div>
-
-                            <img src="images/sparklance-logo.png" onerror="this.src='https://placehold.co/400x400/121212/D71921?text=Sparklance'; this.onerror=null;" alt="Sparklance Solutions" class="w-48 h-48 md:w-60 md:h-60 object-contain drop-shadow-2xl z-20 group-hover:scale-110 transition-transform duration-500">
+                            <!-- PHASE 1: LAYOUT SHIFT FIX -->
+                            <img src="images/sparklance-logo.png" width="240" height="240" onerror="this.src='https://placehold.co/400x400/121212/D71921?text=Sparklance'; this.onerror=null;" alt="Sparklance Solutions" class="w-48 h-48 md:w-60 md:h-60 object-contain drop-shadow-2xl z-20 group-hover:scale-110 transition-transform duration-500">
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
     <!-- Skills (Floating Widgets) -->
+    <!-- PHASE 4: Added data-tech attributes for matching -->
     <section id="skills" class="container mx-auto px-4 pb-20 -mt-20 relative z-20 reveal">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <!-- Widget 1: Python -->
-            <div class="bg-theme-secondary border border-theme p-6 rounded-2xl hover-card group flex flex-col items-center text-center float-anim" style="background-color: var(--bg-secondary);">
+            
+            <!-- Widget 1: Python -->
+            <!-- PHASE 2: STANDARDIZE RADIUS (rounded-xl) -->
+            <div class="bg-theme-secondary border border-theme p-6 rounded-xl hover-card group flex flex-col items-center text-center float-anim skill-widget" 
+                 style="background-color: var(--bg-secondary);" 
+                 data-tech="python">
                 <div class="w-12 h-12 bg-neutral-800 rounded-full flex items-center justify-center mb-4 text-2xl text-yellow-500">
                     <i class="fa-brands fa-python"></i>
                 </div>
@@ -385,7 +404,9 @@
             </div>
 
             <!-- Widget 2: Web -->
-            <div class="bg-theme-secondary border border-theme p-6 rounded-2xl hover-card group flex flex-col items-center text-center float-anim" style="background-color: var(--bg-secondary);">
+            <div class="bg-theme-secondary border border-theme p-6 rounded-xl hover-card group flex flex-col items-center text-center float-anim skill-widget" 
+                 style="background-color: var(--bg-secondary);"
+                 data-tech="web">
                 <div class="w-12 h-12 bg-neutral-800 rounded-full flex items-center justify-center mb-4 text-2xl text-blue-500">
                     <i class="fa-brands fa-html5"></i>
                 </div>
@@ -397,7 +418,9 @@
             </div>
 
             <!-- Widget 3: Android -->
-            <div class="bg-theme-secondary border border-theme p-6 rounded-2xl hover-card group flex flex-col items-center text-center float-anim" style="background-color: var(--bg-secondary);">
+            <div class="bg-theme-secondary border border-theme p-6 rounded-xl hover-card group flex flex-col items-center text-center float-anim skill-widget" 
+                 style="background-color: var(--bg-secondary);"
+                 data-tech="android">
                 <div class="w-12 h-12 bg-neutral-800 rounded-full flex items-center justify-center mb-4 text-2xl text-green-500">
                     <i class="fa-brands fa-android"></i>
                 </div>
@@ -409,7 +432,9 @@
             </div>
 
             <!-- Widget 4: Java -->
-            <div class="bg-theme-secondary border border-theme p-6 rounded-2xl hover-card group flex flex-col items-center text-center float-anim" style="background-color: var(--bg-secondary);">
+            <div class="bg-theme-secondary border border-theme p-6 rounded-xl hover-card group flex flex-col items-center text-center float-anim skill-widget" 
+                 style="background-color: var(--bg-secondary);"
+                 data-tech="java">
                 <div class="w-12 h-12 bg-neutral-800 rounded-full flex items-center justify-center mb-4 text-2xl text-red-500">
                     <i class="fa-brands fa-java"></i>
                 </div>
@@ -423,48 +448,13 @@
         </div>
     </section>
 
-    <!-- NEW SECTION: Tech Stack Marquee (Between Skills and Projects) -->
+    <!-- Tech Stack Marquee (Between Skills and Projects) -->
+    <!-- PHASE 2: REMOVED DUPLICATE HARDCODED ICONS. JS WILL POPULATE. -->
     <section class="py-12 border-y border-theme bg-theme-secondary overflow-hidden" style="background-color: var(--bg-secondary);">
         <div class="tech-marquee">
-            <div class="tech-track brand-font">
-                <!-- UPDATED: Quadrupled list for seamless loop on wide screens -->
-                <div class="flex items-center">
-                    <!-- SET 1 -->
-                    <i class="fa-brands fa-react tech-item" title="React Native"></i>
-                    <i class="fa-brands fa-java tech-item" title="Java"></i>
-                    <i class="fa-brands fa-python tech-item" title="Python"></i>
-                    <i class="fa-brands fa-js tech-item" title="JavaScript"></i>
-                    <i class="fa-brands fa-html5 tech-item" title="HTML5"></i>
-                    <i class="fa-brands fa-css3-alt tech-item" title="CSS3"></i>
-                    <i class="fa-brands fa-android tech-item" title="Android"></i>
-                    <i class="fa-brands fa-git-alt tech-item" title="Git"></i>
-                    <i class="fa-solid fa-database tech-item" title="SQL"></i>
-                    <i class="fa-brands fa-linux tech-item" title="Linux"></i>
-                                        <!-- SET 2 -->
-                    <i class="fa-brands fa-react tech-item" title="React Native"></i>
-                    <i class="fa-brands fa-java tech-item" title="Java"></i>
-                    <i class="fa-brands fa-python tech-item" title="Python"></i>
-                    <i class="fa-brands fa-js tech-item" title="JavaScript"></i>
-                    <i class="fa-brands fa-html5 tech-item" title="HTML5"></i>
-                    <i class="fa-brands fa-css3-alt tech-item" title="CSS3"></i>
-                    <i class="fa-brands fa-android tech-item" title="Android"></i>
-                    <i class="fa-brands fa-git-alt tech-item" title="Git"></i>
-                    <i class="fa-solid fa-database tech-item" title="SQL"></i>
-                    <i class="fa-brands fa-linux tech-item" title="Linux"></i>
-
-                    <!-- SET 3 -->
-                    <i class="fa-brands fa-react tech-item" title="React Native"></i>
-                    <i class="fa-brands fa-java tech-item" title="Java"></i>
-                    <i class="fa-brands fa-python tech-item" title="Python"></i>
-                    <i class="fa-brands fa-js tech-item" title="JavaScript"></i>
-                    <i class="fa-brands fa-html5 tech-item" title="HTML5"></i>
-                    <i class="fa-brands fa-css3-alt tech-item" title="CSS3"></i>
-                    <i class="fa-brands fa-android tech-item" title="Android"></i>
-                    <i class="fa-brands fa-git-alt tech-item" title="Git"></i>
-                    <i class="fa-solid fa-database tech-item" title="SQL"></i>
-                    <i class="fa-brands fa-linux tech-item" title="Linux"></i>
-
-                    <!-- SET 4 -->
+            <div class="tech-track brand-font" id="tech-track">
+                <!-- Single source of truth. JS will clone this set. -->
+                <div class="flex items-center" id="tech-source">
                     <i class="fa-brands fa-react tech-item" title="React Native"></i>
                     <i class="fa-brands fa-java tech-item" title="Java"></i>
                     <i class="fa-brands fa-python tech-item" title="Python"></i>
@@ -481,6 +471,7 @@
     </section>
 
     <!-- Projects -->
+    <!-- PHASE 4: Added data-tech attributes for filtering/highlighting -->
     <section id="projects" class="py-20 md:py-32 reveal">
         <div class="container mx-auto px-4">
             <div class="flex items-end justify-between mb-16 border-b border-theme pb-4">
@@ -493,15 +484,18 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                <!-- Project 1: Word Game (Restored Photo) -->
-                <div class="bg-theme-secondary border border-theme rounded-lg overflow-hidden hover-card group flex flex-col float-anim" style="background-color: var(--bg-secondary);">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="project-grid">
+                
+                <!-- Project 1: Word Game -->
+                <!-- Tech: Python, Android -->
+                <div class="bg-theme-secondary border border-theme rounded-xl overflow-hidden hover-card group flex flex-col float-anim project-card" 
+                     style="background-color: var(--bg-secondary);"
+                     data-tech="python android">
                     <div class="h-48 bg-neutral-800 border-b border-theme relative overflow-hidden group-hover:border-red-600 transition-colors">
-                        <!-- Restored Image Logic -->
                         <div class="absolute inset-0 flex items-center justify-center text-theme-muted">
                              <i class="fa-solid fa-gamepad text-4xl"></i>
                         </div>
-                        <img src="images/project-word-game.png" onerror="this.style.opacity='0'" alt="Word Building Game" class="w-full h-full object-cover relative z-10 group-hover:scale-110 transition-transform duration-700">
+                        <img src="images/project-word-game.png" width="400" height="300" onerror="this.style.opacity='0'" alt="Word Building Game" class="w-full h-full object-cover relative z-10 group-hover:scale-110 transition-transform duration-700">
                     </div>
                     <div class="p-6 flex-1 flex flex-col">
                         <h3 class="text-xl font-bold mb-2 brand-font" style="color: var(--text-main);">Word Building Game</h3>
@@ -516,13 +510,16 @@
                     </div>
                 </div>
 
-                <!-- Project 2 (NEW): Video Game Sales Analytics -->
-                <div class="bg-theme-secondary border border-theme rounded-lg overflow-hidden hover-card group flex flex-col float-anim" style="background-color: var(--bg-secondary);">
+                <!-- Project 2: Video Game Sales Analytics -->
+                <!-- Tech: Python, Data -->
+                <div class="bg-theme-secondary border border-theme rounded-xl overflow-hidden hover-card group flex flex-col float-anim project-card" 
+                     style="background-color: var(--bg-secondary);"
+                     data-tech="python">
                     <div class="h-48 bg-neutral-800 border-b border-theme relative overflow-hidden group-hover:border-red-600 transition-colors">
                         <div class="absolute inset-0 flex items-center justify-center text-theme-muted">
                              <i class="fa-solid fa-chart-line text-4xl"></i>
                         </div>
-                        <img src="images/video-game-sales-analytics.png" onerror="this.style.opacity='0'" alt="Video Game Sales Analytics" class="w-full h-full object-cover relative z-10 group-hover:scale-110 transition-transform duration-700">
+                        <img src="images/video-game-sales-analytics.png" width="400" height="300" onerror="this.style.opacity='0'" alt="Video Game Sales Analytics" class="w-full h-full object-cover relative z-10 group-hover:scale-110 transition-transform duration-700">
                     </div>
                     <div class="p-6 flex-1 flex flex-col">
                         <h3 class="text-xl font-bold mb-2 brand-font" style="color: var(--text-main);">Video Game Analytics</h3>
@@ -538,12 +535,15 @@
                 </div>
 
                 <!-- Project 3: Restaurant -->
-                <div class="bg-theme-secondary border border-theme rounded-lg overflow-hidden hover-card group flex flex-col float-anim" style="background-color: var(--bg-secondary);">
+                <!-- Tech: Java, SQL -->
+                <div class="bg-theme-secondary border border-theme rounded-xl overflow-hidden hover-card group flex flex-col float-anim project-card" 
+                     style="background-color: var(--bg-secondary);"
+                     data-tech="java">
                     <div class="h-48 bg-neutral-800 border-b border-theme relative overflow-hidden">
                         <div class="absolute inset-0 flex items-center justify-center text-theme-muted">
                              <i class="fa-solid fa-utensils text-4xl"></i>
                         </div>
-                        <img src="images/project-restaurant.jpg" onerror="this.style.opacity='0'" alt="Restaurant System" class="w-full h-full object-cover relative z-10 group-hover:scale-110 transition-transform duration-700">
+                        <img src="images/project-restaurant.jpg" width="400" height="300" onerror="this.style.opacity='0'" alt="Restaurant System" class="w-full h-full object-cover relative z-10 group-hover:scale-110 transition-transform duration-700">
                     </div>
                     <div class="p-6 flex-1 flex flex-col">
                         <h3 class="text-xl font-bold mb-2 brand-font" style="color: var(--text-main);">Restaurant Manager</h3>
@@ -559,12 +559,15 @@
                 </div>
 
                 <!-- Project 4: Netflix -->
-                <div class="bg-theme-secondary border border-theme rounded-lg overflow-hidden hover-card group flex flex-col float-anim" style="background-color: var(--bg-secondary);">
+                <!-- Tech: Web (HTML/CSS) -->
+                <div class="bg-theme-secondary border border-theme rounded-xl overflow-hidden hover-card group flex flex-col float-anim project-card" 
+                     style="background-color: var(--bg-secondary);"
+                     data-tech="web">
                     <div class="h-48 bg-neutral-800 border-b border-theme relative overflow-hidden">
                         <div class="absolute inset-0 flex items-center justify-center text-theme-muted">
                              <i class="fa-solid fa-tv text-4xl"></i>
                         </div>
-                        <img src="images/project-netflix.jpg" onerror="this.style.opacity='0'" alt="Netflix Clone" class="w-full h-full object-cover relative z-10 group-hover:scale-110 transition-transform duration-700">
+                        <img src="images/project-netflix.jpg" width="400" height="300" onerror="this.style.opacity='0'" alt="Netflix Clone" class="w-full h-full object-cover relative z-10 group-hover:scale-110 transition-transform duration-700">
                     </div>
                     <div class="p-6 flex-1 flex flex-col">
                         <h3 class="text-xl font-bold mb-2 brand-font" style="color: var(--text-main);">Netflix UI Clone</h3>
@@ -580,7 +583,7 @@
                 </div>
 
             </div>
-                        <div class="mt-16 text-center">
+            <div class="mt-16 text-center">
                 <a href="https://github.com/Siva-kumar-r16" target="_blank" class="inline-block border border-theme text-theme-muted px-8 py-3 rounded-full font-bold hover:bg-red-600 hover:text-white hover:border-red-600 transition-all brand-font">
                     <i class="fa-brands fa-github mr-2"></i> REPOSITORY ARCHIVE
                 </a>
@@ -594,7 +597,7 @@
             <div class="mb-8 text-6xl font-bold brand-font text-theme-muted hover:text-red-600 transition-colors cursor-default tracking-widest">
                 S<span class="text-red-600">.</span>K
             </div>
-                        <p class="text-theme-muted text-xl font-light mb-8 italic roboto-font">
+            <p class="text-theme-muted text-xl font-light mb-8 italic roboto-font">
                 "Living, learning, & leveling up one day at a time."
             </p>
 
@@ -605,10 +608,9 @@
                 <a href="mailto:sirsivakumar@outlook.com" class="social-icon text-theme-muted hover:text-red-500 text-2xl transition-colors"><i class="fa-solid fa-envelope"></i></a>
             </div>
 
-            <!-- RESTORED ORIGINAL FOOTER TEXT -->
             <div class="text-theme-muted text-sm">
                 <p>Handcrafted by Siva Kumar <i class="fa-regular fa-copyright ml-1"></i> 2025</p>
-                <p class="mt-2 text-xs roboto-font">Made with <span class="text-red-600">Nothing OS</span> vibes. For template see my <a href="https://github.com/Cskskjaddu/Portfolio" target="_blank" class="underline hover:text-white transition-colors">GitHub repository</a>.</p>
+                <p class="mt-2 text-xs roboto-font">Made with <span class="text-red-600">Nothing OS</span> vibes.</p>
             </div>
         </div>
     </footer>
@@ -618,12 +620,9 @@
         const toggleSwitch = document.getElementById('theme-toggle');
         const htmlElement = document.documentElement;
 
-        // Default: Dark Mode (No class added)
-        // Only add 'light-mode' if explicitly stored as 'light'
         if (localStorage.getItem('theme') === 'light') {
             htmlElement.classList.add('light-mode');
         } else {
-            // Ensure we start with dark if generic or undefined
             localStorage.setItem('theme', 'dark');
             htmlElement.classList.remove('light-mode');
         }
@@ -645,9 +644,9 @@
         let mouseX = -1000, mouseY = -1000;
         let lastDraw = 0;
         
-        // OPTIMIZATION: Check for low-end device via screen size or user agent (simple heuristic)
+        // OPTIMIZATION: Check for low-end device
         const isLowEnd = window.navigator.hardwareConcurrency <= 4 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        const fpsInterval = isLowEnd ? 1000 / 30 : 1000 / 60; // 30fps for mobile/low-end, 60fps for desktop
+        const fpsInterval = isLowEnd ? 1000 / 30 : 1000 / 60;
 
         function resize() {
             width = canvas.width = window.innerWidth;
@@ -656,50 +655,58 @@
         window.addEventListener('resize', resize);
         resize();
 
+        // PHASE 1: CURSOR & MOUSE LOGIC FIX
+        // Only active custom cursor class if mouse actually moves
         document.addEventListener('mousemove', (e) => {
+            if (!document.body.classList.contains('mouse-active')) {
+                document.body.classList.add('mouse-active');
+            }
+
             mouseX = e.clientX;
             mouseY = e.clientY;
             
             const cursorDot = document.getElementById('cursor-dot');
             const cursorOutline = document.getElementById('cursor-outline');
-            cursorDot.style.left = mouseX + 'px';
-            cursorDot.style.top = mouseY + 'px';
             
-            setTimeout(() => {
-                cursorOutline.style.left = mouseX + 'px';
-                cursorOutline.style.top = mouseY + 'px';
-            }, 50);
+            if(cursorDot && cursorOutline) {
+                cursorDot.style.left = mouseX + 'px';
+                cursorDot.style.top = mouseY + 'px';
+                
+                setTimeout(() => {
+                    cursorOutline.style.left = mouseX + 'px';
+                    cursorOutline.style.top = mouseY + 'px';
+                }, 50);
+            }
         });
 
         document.querySelectorAll('a, button, .toggle-switch').forEach(el => {
             el.addEventListener('mouseenter', () => {
                 const outline = document.getElementById('cursor-outline');
-                outline.style.width = '60px';
-                outline.style.height = '60px';
-                outline.style.borderColor = 'var(--accent-red)';
+                if(outline) {
+                    outline.style.width = '60px';
+                    outline.style.height = '60px';
+                    outline.style.borderColor = 'var(--accent-red)';
+                }
             });
             el.addEventListener('mouseleave', () => {
                 const outline = document.getElementById('cursor-outline');
-                outline.style.width = '40px';
-                outline.style.height = '40px';
-                outline.style.borderColor = 'var(--text-main)';
+                if(outline) {
+                    outline.style.width = '40px';
+                    outline.style.height = '40px';
+                    outline.style.borderColor = 'var(--text-main)';
+                }
             });
         });
 
         function draw(timestamp) {
             requestAnimationFrame(draw);
-
-            // Throttle FPS
             const elapsed = timestamp - lastDraw;
             if (elapsed < fpsInterval) return;
             lastDraw = timestamp - (elapsed % fpsInterval);
-
             ctx.clearRect(0, 0, width, height);
             
             const dotSize = 2;
-            // OPTIMIZATION: Increase spacing on smaller screens to reduce draw calls
             const spacing = window.innerWidth < 768 ? 50 : 30;
-            
             const rows = Math.ceil(height / spacing);
             const cols = Math.ceil(width / spacing);
             
@@ -708,7 +715,6 @@
             const accent = style.getPropertyValue('--accent-red').trim();
             ctx.fillStyle = dotColor;
 
-            // Only calculate interaction if mouse is on screen
             const hasMouse = mouseX > 0 && mouseY > 0;
 
             for (let i = 0; i < cols; i++) {
@@ -719,27 +725,22 @@
                     if (hasMouse) {
                         const dx = x - mouseX;
                         const dy = y - mouseY;
-                        // Simplified distance check (box check first for speed)
                         if (Math.abs(dx) < 150 && Math.abs(dy) < 150) {
                             const distance = Math.sqrt(dx * dx + dy * dy);
                             const maxDist = 150;
-
                             if (distance < maxDist) {
                                 const scale = 1 + (maxDist - distance) / 20;
                                 const alpha = 1 - (distance / maxDist);
-                                
                                 ctx.beginPath();
                                 ctx.arc(x, y, dotSize * scale, 0, Math.PI * 2);
                                 ctx.fillStyle = accent;
                                 ctx.globalAlpha = alpha;
                                 ctx.fill();
                                 ctx.globalAlpha = 1;
-                                continue; // Skip default draw
+                                continue;
                             }
                         }
                     }
-
-                    // Default static dot
                     ctx.beginPath();
                     ctx.arc(x, y, dotSize, 0, Math.PI * 2);
                     ctx.fillStyle = dotColor;
@@ -749,39 +750,88 @@
         }
         requestAnimationFrame(draw);
 
-        // --- 3. SYSTEM CLOCK (12HR Format) ---
+        // --- 3. SYSTEM CLOCK ---
         function updateTime() {
             const now = new Date();
             let hours = now.getHours();
             const minutes = now.getMinutes().toString().padStart(2, '0');
             const seconds = now.getSeconds().toString().padStart(2, '0');
             const ampm = hours >= 12 ? 'PM' : 'AM';
-            
             hours = hours % 12;
-            hours = hours ? hours : 12; // the hour '0' should be '12'
-            hours = hours.toString().padStart(2, '0');
-            
-            const timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
+            hours = hours ? hours : 12;
+            const timeString = `${hours.toString().padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
             document.getElementById('system-time').innerText = timeString;
         }
         setInterval(updateTime, 1000);
         updateTime();
 
-        // --- 4. SCROLL REVEAL ---
+        // --- 4. SCROLL REVEAL & PHASE 3 NAV HIGHLIGHT ---
         const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
+            threshold: 0.3, // Trigger when 30% visible
+            rootMargin: "0px"
         };
 
-        const observer = new IntersectionObserver((entries) => {
+        const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
+                    
+                    // Nav Highlight Logic
+                    const id = entry.target.getAttribute('id');
+                    if (id) {
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            link.classList.remove('text-red-600');
+                            if(link.getAttribute('data-target') === id) {
+                                link.classList.add('text-red-600');
+                            }
+                        });
+                    }
                 }
             });
         }, observerOptions);
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        document.querySelectorAll('.reveal, section[id]').forEach(el => sectionObserver.observe(el));
+
+        // --- PHASE 2: MARQUEE CLONING ---
+        const techTrack = document.getElementById('tech-track');
+        const techSource = document.getElementById('tech-source');
+        // Clone 3 times to ensure infinite scroll coverage on large screens
+        for(let i=0; i<3; i++) {
+            techTrack.appendChild(techSource.cloneNode(true));
+        }
+
+        // --- PHASE 4: TECH INTERACTIVITY ---
+        const skillWidgets = document.querySelectorAll('.skill-widget');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        skillWidgets.forEach(widget => {
+            widget.addEventListener('mouseenter', () => {
+                const tech = widget.getAttribute('data-tech');
+                
+                projectCards.forEach(card => {
+                    const cardTech = card.getAttribute('data-tech') || "";
+                    if (cardTech.includes(tech)) {
+                        card.classList.remove('card-dimmed');
+                        card.style.transform = 'translateY(-5px)';
+                        card.style.borderColor = 'var(--accent-red)';
+                    } else {
+                        card.classList.add('card-dimmed');
+                        card.style.transform = 'translateY(0)';
+                        card.style.borderColor = 'var(--border-color)';
+                    }
+                });
+            });
+
+            widget.addEventListener('mouseleave', () => {
+                projectCards.forEach(card => {
+                    card.classList.remove('card-dimmed');
+                    // Reset inline styles
+                    card.style.transform = '';
+                    card.style.borderColor = '';
+                });
+            });
+        });
+
     </script>
 </body>
 </html>
